@@ -215,7 +215,8 @@
 
                         <!-- Target Object -->
                         <div id="game-target-wrapper" class="absolute w-[85px] h-[107px] cursor-crosshair z-30">
-                            <img id="target-img" class="w-full h-auto block select-none drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]" src="img_js.png" alt="Target" />
+                            <!-- ADDED: mix-blend-multiply to hide white backgrounds, rounded-[32px] to clip off outer borders -->
+                            <img id="target-img" class="w-full h-auto block select-none drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)] mix-blend-multiply rounded-[32px]" src="img_js.png" alt="Target" />
                             <div id="sacked-banner" class="hidden w-full h-full bg-red-500/95 border-2 border-amber-400 rounded-lg text-amber-400 font-black text-base text-center uppercase items-center justify-center italic shadow-[0_4px_10px_rgba(0,0,0,0.5)] drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]">
                                 Sacked!
                             </div>
@@ -239,10 +240,10 @@
                 <!-- Description Field Panel -->
                 <div class="mt-5 p-4 bg-slate-950/60 border border-slate-800 rounded-lg shadow-inner">
                     <div class="flex items-center gap-2 text-teal-400 font-bold text-sm uppercase tracking-wider mb-1">
-                        <i class="fa-solid fa-circle-info"></i> <span id="target-title">Classic Jackass</span>
+                        <i class="fa-solid fa-circle-info"></i> <span id="target-title">Jarrett</span>
                     </div>
                     <p id="target-desc" class="text-xs text-slate-300 leading-relaxed font-medium">
-                        The original legend of the pool scene. Fast, unpredictable, and determined to score a touchdown in your endzone. Click him before he crosses the goal line!
+                        Jarrett is on a mission to rewrite the rulebook! Click him before he reaches the endzone and alters the scoring system.
                     </p>
                 </div>
 
@@ -255,12 +256,12 @@
                 target1: {
                     title: "Jarrett",
                     src: "img_js.png",
-                    description: "The original legend of the pool scene. Fast, unpredictable, and determined to score a touchdown in your endzone. Click him before he crosses the goal line!"
+                    description: "Jarrett is on a mission to rewrite the rulebook! Click him before he reaches the endzone and alters the scoring system."
                 },
                 target2: {
                     title: "Al Botta",
-                    src: "img_ab.png", // Replace with your second image path if different
-                    description: "A crafty challenger looking to steal the championship title. Keep your eye on the ball and click to sack him!"
+                    src: "img_ab.png",
+                    description: "Al Botta is scheming to alter the points! Fast and elusive—sack him before he makes it across!"
                 }
             };
 
