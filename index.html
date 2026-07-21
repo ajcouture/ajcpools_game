@@ -395,6 +395,35 @@
             window.addEventListener('resize', function () {
                 adjustVerticalPosition();
             });
+
+            // Variable reference for the reset button
+            var resetBtn = document.getElementById('reset-btn');
+            
+            function resetGame() {
+                // 1. Reset Scores
+                playerScore = 0;
+                cpuScore = 0;
+                playerDisplay.innerHTML = playerScore;
+                cpuDisplay.innerHTML = cpuScore;
+            
+                // 2. Reset Speeds back to original initial values
+                baseSpeed = 3.5;
+                speedX = baseSpeed;
+            
+                // 3. Unpause if currently paused
+                if (isPaused) {
+                    togglePause();
+                }
+            
+                // 4. Send target back to start
+                isHit = false;
+                sackedBanner.style.display = 'none';
+                targetImg.style.display = 'block';
+                resetTarget();
+            }
+            
+            // Attach event listener to the reset button
+            resetBtn.addEventListener('click', resetGame);
         </script>
     </form>
 </body>
