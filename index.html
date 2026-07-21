@@ -26,6 +26,64 @@
         }
         .css-yard-line::before { top: 15px; }
         .css-yard-line::after { bottom: 15px; }
+
+           /* Ambient Background Grid and Glows on the Header Wrapper */
+    .ajc-navbar-container {
+        font-family: var(--font-stack);
+        background-color: var(--bg-deep);
+        background-image: 
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 32px 32px;
+        border-bottom: 1px solid var(--border-color);
+        
+        /* FIX 2: Modified from 'relative' to fixed pinning to force the menu to stick to the top on scroll */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        
+        z-index: 9999;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .ajc-navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px 20px;
+    }
+
+    /* Pure CSS Neon Logo */
+    .neon-brand-logo {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--font-stack);
+        font-size: 26px;
+        letter-spacing: -0.05em;
+        text-transform: uppercase;
+        transition: transform 0.2s ease;
+    }
+
+    .neon-brand-logo:hover {
+        transform: scale(1.05);
+    }
+
+    .brand-ajc {
+        color: var(--accent-teal);
+        font-weight: 900;
+        font-style: italic;
+        text-shadow: 0 0 12px rgba(20, 184, 166, 0.5);
+    }
+
+    .brand-pools {
+        color: var(--text-primary);
+        font-weight: 900;
+        margin-left: 4px;
+    }
     </style>
 </head>
 <body class="min-h-screen bg-[#020617] font-['Inter',sans-serif] text-slate-200 select-none bg-grid-pattern">
