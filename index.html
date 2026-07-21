@@ -16,6 +16,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style type="text/css">
+        /* CSS Root Variables Definition */
+        :root {
+            --font-stack: 'Inter', sans-serif;
+            --bg-deep: rgba(15, 23, 42, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-teal: #2dd4bf;
+            --text-primary: #f8fafc;
+        }
+
         /* Minimal helper CSS for repetitive pseudo-elements & background pattern */
         .bg-grid-pattern {
             background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
@@ -27,95 +36,135 @@
         .css-yard-line::before { top: 15px; }
         .css-yard-line::after { bottom: 15px; }
 
-           /* Ambient Background Grid and Glows on the Header Wrapper */
-    .ajc-navbar-container {
-        font-family: var(--font-stack);
-        background-color: var(--bg-deep);
-        background-image: 
-            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        background-size: 32px 32px;
-        border-bottom: 1px solid var(--border-color);
-        
-        /* FIX 2: Modified from 'relative' to fixed pinning to force the menu to stick to the top on scroll */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        
-        z-index: 9999;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-    }
+        /* Fixed Navigation Bar Styling */
+        .ajc-navbar-container {
+            font-family: var(--font-stack);
+            background-color: var(--bg-deep);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px;
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+        }
 
-    .ajc-navbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 12px 20px;
-    }
+        .ajc-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 24px;
+        }
 
-    /* Pure CSS Neon Logo */
-    .neon-brand-logo {
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        font-family: var(--font-stack);
-        font-size: 26px;
-        letter-spacing: -0.05em;
-        text-transform: uppercase;
-        transition: transform 0.2s ease;
-    }
+        /* Enhanced Neon Brand Logo */
+        .neon-brand-logo {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-stack);
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    .neon-brand-logo:hover {
-        transform: scale(1.05);
-    }
+        .neon-brand-logo:hover {
+            transform: translateY(-1px) scale(1.02);
+        }
 
-    .brand-ajc {
-        color: var(--accent-teal);
-        font-weight: 900;
-        font-style: italic;
-        text-shadow: 0 0 12px rgba(20, 184, 166, 0.5);
-    }
+        .logo-icon-box {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            box-shadow: 0 0 16px rgba(20, 184, 166, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 18px;
+        }
 
-    .brand-pools {
-        color: var(--text-primary);
-        font-weight: 900;
-        margin-left: 4px;
-    }
+        .logo-text-group {
+            display: flex;
+            align-items: baseline;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .brand-ajc {
+            background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            font-style: italic;
+            font-size: 26px;
+            filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.3));
+        }
+
+        .brand-pools {
+            color: var(--text-primary);
+            font-weight: 900;
+            font-size: 26px;
+            margin-left: 4px;
+            letter-spacing: 0.05em;
+        }
+
+        .logo-tag {
+            font-size: 10px;
+            font-weight: 800;
+            background: rgba(20, 184, 166, 0.15);
+            color: #2dd4bf;
+            border: 1px solid rgba(45, 212, 191, 0.3);
+            padding: 3px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
     </style>
 </head>
-<body class="min-h-screen bg-[#020617] font-['Inter',sans-serif] text-slate-200 select-none bg-grid-pattern">
+<body class="min-h-screen bg-[#020617] font-['Inter',sans-serif] text-slate-200 select-none bg-grid-pattern pt-28">
     <form id="Form1" method="post" runat="server">
 
         <div class="ajc-navbar-container">
             <div class="ajc-navbar">
-                    <!-- Mobile Menu Trigger -->
-                    <button class="menu-toggle-btn" aria-label="Toggle Navigation">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
+                <!-- Mobile Menu Trigger -->
+                <button class="menu-toggle-btn text-slate-300 hover:text-white" aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
             
-                    <!-- Brand Logo -->
-                    <div class="logo-container">
-                        <a href="NCAAHome.aspx" class="neon-brand-logo">
+                <!-- Brand Logo -->
+                <div class="logo-container">
+                    <a href="#" class="neon-brand-logo">
+                        <div class="logo-icon-box">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <div class="logo-text-group">
                             <span class="brand-ajc">AJC</span><span class="brand-pools">POOLS</span>
-                        </a>
-                    </div>
-            
-                    <!-- Sports Tech Styled Navigation Links -->
-                    <nav class="NewMenu">
-                        
-                    </nav>
-            
-                    <!-- Centering block for Mobile layout -->
-                    <div style="width: 44px;" class="d-md-none">&nbsp;</div>
+                        </div>
+                        <span class="logo-tag hidden sm:inline-block">ARENA</span>
+                    </a>
                 </div>
+            
+                <!-- Sports Tech Styled Navigation Links -->
+                <nav class="NewMenu">
+                    
+                </nav>
+            
+                <!-- Balancing placeholder for alignment -->
+                <div class="w-10"></div>
             </div>
+        </div>
+        
         <!-- Main Page Content -->
-        <div class="relative z-10 max-w-[950px] my-10 mx-auto px-5">
+        <div class="relative z-10 max-w-[950px] mb-10 mx-auto px-5">
             <!-- Glass Card -->
             <div class="bg-slate-900/90 backdrop-blur-2xl border border-slate-800 shadow-[0_8px_32px_rgba(0,0,0,0.5)] rounded-xl p-[30px]">
                 
