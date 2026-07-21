@@ -409,14 +409,15 @@
 
                 if (!isHit && !isPaused && !isGameOver) {
                     posX += speedX;
-                }
 
-                if (posX >= maxX) {
-                    cpuScore++;
-                    cpuDisplay.innerHTML = cpuScore;
-                    checkWinCondition();
-                    if (!isGameOver) {
-                        resetTarget();
+                    if (posX >= maxX) {
+                        cpuScore++;
+                        cpuDisplay.innerHTML = cpuScore;
+                        checkWinCondition();
+                        
+                        if (!isGameOver) {
+                            resetTarget();
+                        }
                     }
                 }
 
