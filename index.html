@@ -299,6 +299,15 @@
             var baseSpeed = 3.5;
             var speedX = baseSpeed;
 
+            // NEW: Function to set a random vertical position anywhere inside the field boundaries
+            function setRandomVerticalPosition() {
+                var maxPosY = playingField.offsetHeight - wrapper.offsetHeight;
+                // Ensures target stays completely inside the field (between top=10px padding and bottom boundary)
+                var padding = 10;
+                var randomY = Math.floor(Math.random() * (maxPosY - padding * 2)) + padding;
+                wrapper.style.top = Math.max(padding, randomY) + 'px';
+            }
+
             // Target Switcher Logic
             function setTarget(key) {
                 if (!targetProfiles[key]) return;
@@ -322,16 +331,11 @@
                     b1.className = "px-3 py-1.5 rounded-lg bg-slate-800/60 border border-slate-700 text-slate-400 font-bold text-xs flex items-center gap-1.5 hover:bg-slate-800 transition-all";
                 }
             
-                adjustVerticalPosition();
-            }
-
-            function adjustVerticalPosition() {
-                var posY = (playingField.offsetHeight / 2) - (wrapper.offsetHeight / 2);
-                wrapper.style.top = posY + 'px';
+                resetTarget();
             }
 
             wrapper.style.left = posX + 'px';
-            targetImg.onload = adjustVerticalPosition;
+            targetImg.onload = setRandomVerticalPosition;
 
             function togglePause() {
                 isPaused = !isPaused;
@@ -363,7 +367,7 @@
 
             function resetTarget() {
                 posX = -wrapper.offsetWidth;
-                adjustVerticalPosition();
+                setRandomVerticalPosition();
             }
 
             wrapper.addEventListener('click', function () {
@@ -398,10 +402,6 @@
 
             requestAnimationFrame(updatePhysics);
 
-            window.addEventListener('resize', function () {
-                adjustVerticalPosition();
-            });
-
             // Variable reference for the reset button
             var resetBtn = document.getElementById('reset-btn');
             
@@ -421,7 +421,7 @@
                     togglePause();
                 }
             
-                // 4. Send target back to start
+                // 4. Send target back to start with a new random Y position
                 isHit = false;
                 sackedBanner.style.display = 'none';
                 targetImg.style.display = 'block';
