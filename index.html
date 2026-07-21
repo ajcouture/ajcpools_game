@@ -198,7 +198,7 @@
                 <!-- Field Arena Box -->
                 <div class="grid grid-cols-[8%_84%_8%] w-full h-[380px] relative border-4 border-white rounded-lg overflow-hidden shadow-[inset_0_0_40px_rgba(0,0,0,0.5)]" id="arena">
                     
-                    <!-- Left Endzone (UPDATED TO "AJC POOLS") -->
+                    <!-- Left Endzone -->
                     <div class="bg-emerald-900 h-full flex items-center justify-center text-2xl font-black text-white/20 tracking-[6px] border-r-4 border-white [writing-mode:vertical-lr] [text-orientation:upright]">
                         AJC POOLS
                     </div>
@@ -238,6 +238,16 @@
                         <div id="pause-overlay" class="hidden absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-40 flex flex-col items-center justify-center text-white">
                             <div class="text-3xl font-black italic tracking-widest text-amber-400 mb-1 drop-shadow-md">GAME PAUSED</div>
                             <p class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Press Spacebar or Click Resume to Play</p>
+                        </div>
+
+                        <!-- Game Over Modal Screen -->
+                        <div id="gameover-overlay" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex flex-col items-center justify-center text-white p-6 text-center">
+                            <div id="gameover-icon" class="text-5xl mb-3"></div>
+                            <div id="gameover-title" class="text-3xl font-black italic uppercase tracking-wider mb-2"></div>
+                            <p id="gameover-message" class="text-sm font-medium text-slate-300 max-w-md mb-6 leading-relaxed"></p>
+                            <button type="button" onclick="resetGame()" class="px-6 py-2.5 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-lg transition-all transform active:scale-95">
+                                <i class="fa-solid fa-rotate-right mr-1.5"></i> Play Again
+                            </button>
                         </div>
 
                     </div>
@@ -281,6 +291,9 @@
 
             var playerScore = 0;
             var cpuScore = 0;
+            var winningScore = 21; // First to 21 Wins!
+            var isGameOver = false;
+
             var playerDisplay = document.getElementById('player-score');
             var cpuDisplay = document.getElementById('cpu-score');
 
@@ -291,12 +304,12 @@
             
             var pauseBtn = document.getElementById('pause-btn');
             var pauseOverlay = document.getElementById('pause-overlay');
+            var gameOverOverlay = document.getElementById('gameover-overlay');
 
             var isHit = false;
             var isPaused = false;
 
             var posX = 0;
-            // Min speed = 3.5, Max speed = 13.5 (Speed reached around 20 scores)
             var minSpeed = 3.5;
             var maxSpeed = 13.5;
             var speedX = minSpeed;
@@ -309,7 +322,7 @@
                 wrapper.style.top = Math.max(padding, randomY) + 'px';
             }
 
-            // NEW: Random speed generator per pass
+            // Random speed generator per pass
             function setRandomSpeed() {
                 speedX = Math.random() * (maxSpeed - minSpeed) + minSpeed;
             }
@@ -344,6 +357,7 @@
             targetImg.onload = setRandomVerticalPosition;
 
             function togglePause() {
+                if (isGameOver) return;
                 isPaused = !isPaused;
                 if (isPaused) {
                     pauseOverlay.classList.remove('hidden');
@@ -354,17 +368,51 @@
                 }
             }
 
+            function checkWinCondition() {
+                if (playerScore >= winningScore) {
+                    endGame(true);
+                } else if (cpuScore >= winningScore) {
+                    endGame(false);
+                }
+            }
+
+            function endGame(playerWon) {
+                isGameOver = true;
+                isPaused = true;
+
+                var iconEl = document.getElementById('gameover-icon');
+                var titleEl = document.getElementById('gameover-title');
+                var msgEl = document.getElementById('gameover-message');
+
+                if (playerWon) {
+                    iconEl.innerHTML = '🏆';
+                    titleEl.className = 'text-3xl font-black italic uppercase tracking-wider mb-2 text-teal-400 drop-shadow-md';
+                    titleEl.innerText = 'Victory! Pool Saved!';
+                    msgEl.innerText = 'You shut down Jarrett & Al! The scoring system is safe and the integrity of the AJC Pool lives on for another season.';
+                } else {
+                    iconEl.innerHTML = '🏈💥';
+                    titleEl.className = 'text-3xl font-black italic uppercase tracking-wider mb-2 text-rose-500 drop-shadow-md';
+                    titleEl.innerText = 'Touchdown! You Lost!';
+                    msgEl.innerText = 'Oh no! Jarrett & Al slipped past you 21 times. The scoring system has been officially changed and total chaos ensues!';
+                }
+
+                gameOverOverlay.classList.remove('hidden');
+            }
+
             function updatePhysics() {
                 var maxX = playingField.offsetWidth;
 
-                if (!isHit && !isPaused) {
+                if (!isHit && !isPaused && !isGameOver) {
                     posX += speedX;
                 }
 
                 if (posX >= maxX) {
                     cpuScore++;
                     cpuDisplay.innerHTML = cpuScore;
-                    resetTarget();
+                    checkWinCondition();
+                    if (!isGameOver) {
+                        resetTarget();
+                    }
                 }
 
                 wrapper.style.left = posX + 'px';
@@ -374,15 +422,16 @@
             function resetTarget() {
                 posX = -wrapper.offsetWidth;
                 setRandomVerticalPosition();
-                setRandomSpeed(); // Select a fresh random speed for every new pass
+                setRandomSpeed();
             }
 
             wrapper.addEventListener('click', function () {
-                if (isHit || isPaused) return;
+                if (isHit || isPaused || isGameOver) return;
                 isHit = true;
 
                 playerScore++;
                 playerDisplay.innerHTML = playerScore;
+                checkWinCondition();
 
                 targetImg.style.display = 'none';
                 sackedBanner.style.display = 'flex';
@@ -390,7 +439,9 @@
                 setTimeout(function () {
                     sackedBanner.style.display = 'none';
                     targetImg.style.display = 'block';
-                    resetTarget();
+                    if (!isGameOver) {
+                        resetTarget();
+                    }
                     isHit = false;
                 }, 400);
             });
@@ -415,9 +466,12 @@
                 playerDisplay.innerHTML = playerScore;
                 cpuDisplay.innerHTML = cpuScore;
             
-                if (isPaused) {
-                    togglePause();
-                }
+                isGameOver = false;
+                isPaused = false;
+
+                gameOverOverlay.classList.add('hidden');
+                pauseOverlay.classList.add('hidden');
+                pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
             
                 isHit = false;
                 sackedBanner.style.display = 'none';
@@ -428,7 +482,5 @@
             resetBtn.addEventListener('click', resetGame);
         </script>
     </form>
-</body>
-</html>
 </body>
 </html>
