@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>AJCPools | Dedicated to the Biggest Jackass in Pool History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- FavIcon Configuration -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg transform='rotate(-45 16 16)'%3E%3Cpath d='M2 16C2 6 10 2 16 2s14 4 14 14-8 14-14 14S2 26 2 16z' fill='%238B4513'/%3E%3Cpath d='M16 6v20' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M12 11h8M12 16h8M12 21h8' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,700;0,900;1,900&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS Script CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style type="text/css">
+        /* Minimal helper CSS for repetitive pseudo-elements & background pattern */
+        .bg-grid-pattern {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .css-yard-line::before, .css-yard-line::after {
+            content: ''; position: absolute; width: 10px; height: 2px; background: rgba(255, 255, 255, 0.4); left: -4px;
+        }
+        .css-yard-line::before { top: 15px; }
+        .css-yard-line::after { bottom: 15px; }
+    </style>
+</head>
+<body class="min-h-screen bg-[#020617] font-['Inter',sans-serif] text-slate-200 select-none bg-grid-pattern">
+    <form id="Form1" method="post" runat="server">
+
+        <!-- Main Page Content -->
+        <div class="relative z-10 max-w-[950px] my-10 mx-auto px-5">
+            <!-- Glass Card -->
+            <div class="bg-slate-900/90 backdrop-blur-2xl border border-slate-800 shadow-[0_8px_32px_rgba(0,0,0,0.5)] rounded-xl p-[30px]">
+                
+                <h1 class="text-white font-black italic uppercase tracking-tight text-2xl mb-[25px] text-center drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+                    Dedicated to the Biggest Jackass in Pool History!
+                </h1>
+                
+                <!-- Score Info Panel -->
+                <div class="flex justify-around items-center bg-slate-800/40 border border-slate-800 rounded-lg py-3 px-4 mb-5 text-center text-xl font-bold text-white">
+                    <div class="flex-1 text-center">Your Score: <b class="text-amber-400 text-2xl"><span id="player-score">0</span></b></div>
+                    <div class="w-px bg-slate-800 h-[30px]"></div>
+                    <div class="flex-1 text-center">Jackass Touchdowns: <b class="text-amber-400 text-2xl"><span id="cpu-score">0</span></b></div>
+                </div>
+
+                <!-- Field Arena Box -->
+                <div class="grid grid-cols-[8%_84%_8%] w-full h-[380px] relative border-4 border-white rounded-lg overflow-hidden shadow-[inset_0_0_40px_rgba(0,0,0,0.5)]" id="arena">
+                    
+                    <!-- Left Endzone -->
+                    <div class="bg-emerald-900 h-full flex items-center justify-center text-2xl font-black text-white/20 tracking-[6px] border-r-4 border-white [writing-mode:vertical-lr] [text-orientation:upright]">
+                        HOME
+                    </div>
+
+                    <!-- Playing Field -->
+                    <div class="relative bg-emerald-700 bg-[linear-gradient(90deg,#166534_50%,#15803d_50%)] bg-[length:20%_100%] h-full w-full" id="playingField">
+                        
+                        <!-- Yard Lines Layer -->
+                        <div class="absolute w-full h-full top-0 left-0 flex justify-between pointer-events-none">
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                            <div class="css-yard-line relative w-[2px] h-full bg-white/40"></div>
+                        </div>
+
+                        <!-- 50 Yard Marker Overlay -->
+                        <div class="absolute w-full h-full top-0 left-0 flex justify-center items-center text-4xl font-extrabold text-white/20 font-mono pointer-events-none">
+                            <div>50</div>
+                        </div>
+
+                        <!-- Target Object -->
+                        <div id="game-target-wrapper" class="absolute w-[85px] h-[107px] cursor-crosshair z-50">
+                            <img id="target-img" class="w-full h-auto block select-none drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)]" src="images/ah/AH.gif" alt="Target" />
+                            <div id="sacked-banner" class="hidden w-full h-full bg-red-500/95 border-2 border-amber-400 rounded-lg text-amber-400 font-black text-base text-center uppercase items-center justify-center italic shadow-[0_4px_10px_rgba(0,0,0,0.5)] drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]">
+                                Sacked!
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Endzone -->
+                    <div class="bg-emerald-900 h-full flex items-center justify-center text-2xl font-black text-white/20 tracking-[6px] border-l-4 border-white [writing-mode:vertical-lr] [text-orientation:upright]">
+                        AWAY
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var playerScore = 0;
+            var cpuScore = 0;
+            var playerDisplay = document.getElementById('player-score');
+            var cpuDisplay = document.getElementById('cpu-score');
+
+            var wrapper = document.getElementById('game-target-wrapper');
+            var targetImg = document.getElementById('target-img');
+            var sackedBanner = document.getElementById('sacked-banner');
+            var playingField = document.getElementById('playingField');
+            var isHit = false;
+
+            var posX = 0;
+            var baseSpeed = 3.5;
+            var speedX = baseSpeed;
+
+            function adjustVerticalPosition() {
+                var posY = (playingField.offsetHeight / 2) - (wrapper.offsetHeight / 2);
+                wrapper.style.top = posY + 'px';
+            }
+
+            wrapper.style.left = posX + 'px';
+            targetImg.onload = adjustVerticalPosition;
+
+            function updatePhysics() {
+                var maxX = playingField.offsetWidth;
+
+                if (!isHit) {
+                    posX += speedX;
+                }
+
+                if (posX >= maxX) {
+                    cpuScore++;
+                    cpuDisplay.innerHTML = cpuScore;
+                    resetTarget();
+                }
+
+                wrapper.style.left = posX + 'px';
+                requestAnimationFrame(updatePhysics);
+            }
+
+            function resetTarget() {
+                posX = -wrapper.offsetWidth;
+                adjustVerticalPosition();
+            }
+
+            wrapper.addEventListener('click', function () {
+                if (isHit) return;
+                isHit = true;
+
+                playerScore++;
+                playerDisplay.innerHTML = playerScore;
+
+                targetImg.style.display = 'none';
+                sackedBanner.style.display = 'flex';
+
+                baseSpeed += 0.5;
+                speedX = baseSpeed;
+
+                setTimeout(function () {
+                    sackedBanner.style.display = 'none';
+                    targetImg.style.display = 'block';
+                    resetTarget();
+                    isHit = false;
+                }, 400);
+            });
+
+            requestAnimationFrame(updatePhysics);
+
+            window.addEventListener('resize', function () {
+                adjustVerticalPosition();
+            });
+        </script>
+    </form>
+</body>
+</html>
