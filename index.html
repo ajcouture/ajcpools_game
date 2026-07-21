@@ -166,7 +166,7 @@
                     Stop Jarrett & Al<br/> from changing the scoring system!
                 </h1>
 
-                <!-- Unified Control Panel (Pause/Reset on Left, Target Selector on Right) -->
+                <!-- Unified Control Panel (Pause/Reset on Left, Game Goal Center, Target Selector on Right) -->
                 <div class="flex flex-col md:flex-row justify-between items-center bg-slate-800/40 border border-slate-800 rounded-xl py-2.5 px-4 mb-5 gap-3">
                     
                     <!-- Left Side: Game Action Controls -->
@@ -178,6 +178,11 @@
                         <button id="reset-btn" type="button" class="px-3.5 py-1.5 bg-rose-500/20 text-rose-300 border border-rose-500/40 rounded-lg font-extrabold text-xs hover:bg-rose-500/30 active:scale-95 transition-all shadow-md flex items-center gap-1.5">
                             <i class="fa-solid fa-rotate-left"></i> Reset
                         </button>
+                    </div>
+
+                    <!-- Center: Win Condition Rule Text -->
+                    <div class="text-[11px] font-black uppercase tracking-wider text-amber-400/90 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-inner">
+                        <i class="fa-solid fa-flag-checkered text-amber-400"></i> First to 21 Points Wins
                     </div>
 
                     <!-- Right Side: Target Selector -->
@@ -393,7 +398,7 @@
                     iconEl.innerHTML = '🏈💥';
                     titleEl.className = 'text-3xl font-black italic uppercase tracking-wider mb-2 text-rose-500 drop-shadow-md';
                     titleEl.innerText = 'Touchdown! You Lost!';
-                    msgEl.innerText = 'Oh no! Chaos reigns as Jarrett & Al ruin the scoring system. This is worse than when Ohio State wins the Nathional Championship!';
+                    msgEl.innerText = 'Oh no! Jarrett & Al slipped past you 21 times. The scoring system has been officially changed and total chaos ensues!';
                 }
 
                 gameOverOverlay.classList.remove('hidden');
