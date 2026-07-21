@@ -171,9 +171,17 @@
                 <div class="flex justify-around items-center bg-slate-800/40 border border-slate-800 rounded-lg py-3 px-4 mb-5 text-center text-xl font-bold text-white relative">
                     <div class="flex-1 text-center">Your Score: <b class="text-amber-400 text-2xl"><span id="player-score">0</span></b></div>
                     
-                    <button id="pause-btn" type="button" class="px-4 py-1.5 bg-teal-500/20 text-teal-300 border border-teal-500/40 rounded-lg font-extrabold text-sm hover:bg-teal-500/30 active:scale-95 transition-all shadow-lg flex items-center gap-1">
-                        <i class="fa-solid fa-pause"></i> Pause
-                    </button>
+                    <!-- Action Buttons Group -->
+                    <div class="flex gap-2">
+                        <button id="pause-btn" type="button" class="px-4 py-1.5 bg-teal-500/20 text-teal-300 border border-teal-500/40 rounded-lg font-extrabold text-sm hover:bg-teal-500/30 active:scale-95 transition-all shadow-lg flex items-center gap-1">
+                            <i class="fa-solid fa-pause"></i> Pause
+                        </button>
+                
+                        <!-- NEW RESET BUTTON -->
+                        <button id="reset-btn" type="button" class="px-4 py-1.5 bg-rose-500/20 text-rose-300 border border-rose-500/40 rounded-lg font-extrabold text-sm hover:bg-rose-500/30 active:scale-95 transition-all shadow-lg flex items-center gap-1">
+                            <i class="fa-solid fa-rotate-left"></i> Reset
+                        </button>
+                    </div>
                     
                     <div class="flex-1 text-center">Jarrett & Al: <b class="text-amber-400 text-2xl"><span id="cpu-score">0</span></b></div>
                 </div>
