@@ -198,7 +198,7 @@
                 <!-- Field Arena Box -->
                 <div class="grid grid-cols-[8%_84%_8%] w-full h-[380px] relative border-4 border-white rounded-lg overflow-hidden shadow-[inset_0_0_40px_rgba(0,0,0,0.5)]" id="arena">
                     
-                    <!-- Left Endzone -->
+                    <!-- Left Endzone (UPDATED TO "AJC POOLS") -->
                     <div class="bg-emerald-900 h-full flex items-center justify-center text-2xl font-black text-white/20 tracking-[6px] border-r-4 border-white [writing-mode:vertical-lr] [text-orientation:upright]">
                         AJC POOLS
                     </div>
@@ -296,16 +296,22 @@
             var isPaused = false;
 
             var posX = 0;
-            var baseSpeed = 3.5;
-            var speedX = baseSpeed;
+            // Min speed = 3.5, Max speed = 13.5 (Speed reached around 20 scores)
+            var minSpeed = 3.5;
+            var maxSpeed = 13.5;
+            var speedX = minSpeed;
 
-            // NEW: Function to set a random vertical position anywhere inside the field boundaries
+            // Random vertical position selection
             function setRandomVerticalPosition() {
                 var maxPosY = playingField.offsetHeight - wrapper.offsetHeight;
-                // Ensures target stays completely inside the field (between top=10px padding and bottom boundary)
                 var padding = 10;
                 var randomY = Math.floor(Math.random() * (maxPosY - padding * 2)) + padding;
                 wrapper.style.top = Math.max(padding, randomY) + 'px';
+            }
+
+            // NEW: Random speed generator per pass
+            function setRandomSpeed() {
+                speedX = Math.random() * (maxSpeed - minSpeed) + minSpeed;
             }
 
             // Target Switcher Logic
@@ -368,6 +374,7 @@
             function resetTarget() {
                 posX = -wrapper.offsetWidth;
                 setRandomVerticalPosition();
+                setRandomSpeed(); // Select a fresh random speed for every new pass
             }
 
             wrapper.addEventListener('click', function () {
@@ -379,9 +386,6 @@
 
                 targetImg.style.display = 'none';
                 sackedBanner.style.display = 'flex';
-
-                baseSpeed += 0.5;
-                speedX = baseSpeed;
 
                 setTimeout(function () {
                     sackedBanner.style.display = 'none';
@@ -402,35 +406,29 @@
 
             requestAnimationFrame(updatePhysics);
 
-            // Variable reference for the reset button
+            // Reset Game Handler
             var resetBtn = document.getElementById('reset-btn');
             
             function resetGame() {
-                // 1. Reset Scores
                 playerScore = 0;
                 cpuScore = 0;
                 playerDisplay.innerHTML = playerScore;
                 cpuDisplay.innerHTML = cpuScore;
             
-                // 2. Reset Speeds back to original initial values
-                baseSpeed = 3.5;
-                speedX = baseSpeed;
-            
-                // 3. Unpause if currently paused
                 if (isPaused) {
                     togglePause();
                 }
             
-                // 4. Send target back to start with a new random Y position
                 isHit = false;
                 sackedBanner.style.display = 'none';
                 targetImg.style.display = 'block';
                 resetTarget();
             }
             
-            // Attach event listener to the reset button
             resetBtn.addEventListener('click', resetGame);
         </script>
     </form>
+</body>
+</html>
 </body>
 </html>
