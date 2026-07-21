@@ -144,7 +144,17 @@
                 </div>
             
                 <nav class="NewMenu"></nav>
-                <div class="w-10"></div>
+                
+                <!-- MOVED: Scoreboard Display in Header -->
+                <div class="flex items-center gap-3 bg-slate-900/90 border border-slate-700/80 rounded-xl px-4 py-1.5 shadow-lg">
+                    <div class="text-xs uppercase tracking-wider font-extrabold text-slate-300">
+                        You: <span id="player-score" class="text-amber-400 text-base font-black ml-0.5">0</span>
+                    </div>
+                    <div class="text-slate-600 font-black text-xs">|</div>
+                    <div class="text-xs uppercase tracking-wider font-extrabold text-slate-300">
+                        Jarrett & Al: <span id="cpu-score" class="text-amber-400 text-base font-black ml-0.5">0</span>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -167,23 +177,17 @@
                     </button>
                 </div>
                 
-                <!-- Score Info & Control Panel -->
-                <div class="flex justify-around items-center bg-slate-800/40 border border-slate-800 rounded-lg py-3 px-4 mb-5 text-center text-xl font-bold text-white relative">
-                    <div class="flex-1 text-center">Your Score: <b class="text-amber-400 text-2xl"><span id="player-score">0</span></b></div>
-                    
-                    <!-- Action Buttons Group -->
-                    <div class="flex gap-2">
-                        <button id="pause-btn" type="button" class="px-4 py-1.5 bg-teal-500/20 text-teal-300 border border-teal-500/40 rounded-lg font-extrabold text-sm hover:bg-teal-500/30 active:scale-95 transition-all shadow-lg flex items-center gap-1">
+                <!-- Action Controls Panel (Cleaned up without Scores) -->
+                <div class="flex justify-center items-center bg-slate-800/40 border border-slate-800 rounded-lg py-2.5 px-4 mb-5 text-center relative">
+                    <div class="flex gap-3">
+                        <button id="pause-btn" type="button" class="px-4 py-1.5 bg-teal-500/20 text-teal-300 border border-teal-500/40 rounded-lg font-extrabold text-xs hover:bg-teal-500/30 active:scale-95 transition-all shadow-lg flex items-center gap-1.5">
                             <i class="fa-solid fa-pause"></i> Pause
                         </button>
-                
-                        <!-- NEW RESET BUTTON -->
-                        <button id="reset-btn" type="button" class="px-4 py-1.5 bg-rose-500/20 text-rose-300 border border-rose-500/40 rounded-lg font-extrabold text-sm hover:bg-rose-500/30 active:scale-95 transition-all shadow-lg flex items-center gap-1">
+
+                        <button id="reset-btn" type="button" class="px-4 py-1.5 bg-rose-500/20 text-rose-300 border border-rose-500/40 rounded-lg font-extrabold text-xs hover:bg-rose-500/30 active:scale-95 transition-all shadow-lg flex items-center gap-1.5">
                             <i class="fa-solid fa-rotate-left"></i> Reset
                         </button>
                     </div>
-                    
-                    <div class="flex-1 text-center">Jarrett & Al: <b class="text-amber-400 text-2xl"><span id="cpu-score">0</span></b></div>
                 </div>
 
                 <!-- Field Arena Box -->
@@ -219,7 +223,6 @@
 
                         <!-- Target Object -->
                         <div id="game-target-wrapper" class="absolute w-[85px] h-[107px] cursor-crosshair z-30">
-                            <!-- ADDED: mix-blend-multiply to hide white backgrounds, rounded-[32px] to clip off outer borders -->
                             <img id="target-img" class="w-full h-auto block select-none drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)] mix-blend-multiply rounded-[32px]" src="img_js.png" alt="Target" />
                             <div id="sacked-banner" class="hidden w-full h-full bg-red-500/95 border-2 border-amber-400 rounded-lg text-amber-400 font-black text-base text-center uppercase items-center justify-center italic shadow-[0_4px_10px_rgba(0,0,0,0.5)] drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]">
                                 Sacked!
@@ -300,8 +303,6 @@
                 // Update Image & Text
                 targetImg.src = profile.src;
                 document.getElementById('target-title').innerText = profile.title;
-                
-                // REPLACE OLD INNERTEXT LINE WITH THIS:
                 document.getElementById('target-desc').innerHTML = profile.description;
             
                 // Toggle Button Visual Styles
